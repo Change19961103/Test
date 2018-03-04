@@ -357,8 +357,8 @@ if __name__ == '__main__':
             print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
-            s.sendMotorCommand(int(left_motor), int(right_motor))
-            # s.sendMotorCommand(int(-200), int(-200))
+            # s.sendMotorCommand(int(left_motor), int(right_motor))
+            s.sendMotorCommand(int(-100), int(-100))
 
             ############################# output image TEST #####################
             # cv2.imshow('img_black',img_black)
