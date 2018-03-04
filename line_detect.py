@@ -264,11 +264,11 @@ class line_detect():
             bias = sum(bias)
             if bias > self.threshold:
                 if sum(distance) > 0:
-                    return [0,-100]
+                    return [0,100]
                 elif sum(distance) < 0:
-                    return [-100, 0]
+                    return [100, 0]
             else:
-                return [-100, -100]
+                return [100, 100]
 
 
 
