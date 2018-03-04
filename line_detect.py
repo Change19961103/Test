@@ -282,91 +282,92 @@ if __name__ == '__main__':
     # turn = False
     while(1):
         ret, origin = cap.read()
-        # the main function
-        line.image_red = []
-        line.image_blue = []
-        line.image_black = []
-        # for i in range(line.slice):
-        #     line.image_red.append(0)
-        #     line.image_blue.append(0)
-        #     line.image_black.append(0)
+        if(ret):
+            # the main function
+            line.image_red = []
+            line.image_blue = []
+            line.image_black = []
+            # for i in range(line.slice):
+            #     line.image_red.append(0)
+            #     line.image_blue.append(0)
+            #     line.image_black.append(0)
 
-        ############################# HSV TEST ##############################
-        HSV_black = line.RemoveBackground_HSV_Black(origin)
-        # HSV_blue = line.RemoveBackground_HSV_Blue(origin)
-        # HSV = line.RemoveBackground_HSV_Green(origin)
-        # HSV = line.RemoveBackground_HSV_Yellow(origin)
-        # HSV = line.RemoveBackground_HSV_Purple(origin)
-        # HSV_red = line.RemoveBackground_HSV_Red(origin)
+            ############################# HSV TEST ##############################
+            HSV_black = line.RemoveBackground_HSV_Black(origin)
+            # HSV_blue = line.RemoveBackground_HSV_Blue(origin)
+            # HSV = line.RemoveBackground_HSV_Green(origin)
+            # HSV = line.RemoveBackground_HSV_Yellow(origin)
+            # HSV = line.RemoveBackground_HSV_Purple(origin)
+            # HSV_red = line.RemoveBackground_HSV_Red(origin)
 
-        ############################# get distance between middle of vision and line #########################
-        distance_Black = line.SlicePart(HSV_black, line.slice, 'BLACK')
-        # distance_Blue = line.SlicePart(HSV_blue, line.slice, 'BLUE')
-        # distance_Green = line.SlicePart(origin, line.slice, 'GREEN')
-        # distance_Red = line.SlicePart(HSV_red, line.slice, 'RED')
-        # distance_Yellow = line.SlicePart(origin, line.slice, 'YELLOW')
+            ############################# get distance between middle of vision and line #########################
+            distance_Black = line.SlicePart(HSV_black, line.slice, 'BLACK')
+            # distance_Blue = line.SlicePart(HSV_blue, line.slice, 'BLUE')
+            # distance_Green = line.SlicePart(origin, line.slice, 'GREEN')
+            # distance_Red = line.SlicePart(HSV_red, line.slice, 'RED')
+            # distance_Yellow = line.SlicePart(origin, line.slice, 'YELLOW')
 
-        ############################# concatenate every slice ###############
-        # img_black = line.RepackImages(line.image_black)
-        # img_blue = line.RepackImages(line.image_blue)
-        # img_red = line.RepackImages(line.image_red)
+            ############################# concatenate every slice ###############
+            # img_black = line.RepackImages(line.image_black)
+            # img_blue = line.RepackImages(line.image_blue)
+            # img_red = line.RepackImages(line.image_red)
 
-        ############################# get motor speed #######################
-        # assume we get a command from webapp, next line is blue line
-        # if distance_Black:
-        #     if not distance_Blue:
-        #         [left_motor, right_motor] = line.line_following(distance_Black)
-        #     else:
-        #         [left_motor, right_motor] = line.line_following(distance_Blue)
-        # if not distance_Black:
-        #     if not distance_Red and not distance_Blue:
-        #         [left_motor, right_motor] = [-200, 200]
-        #     elif distance_Blue:
-        #         [left_motor, right_motor] = line.line_following(distance_Blue)
-        #     elif distance_Red:
-        #         [left_motor, right_motor] = line.line_following(distance_Red)
-        # if distance_Black:
-        #     [left_motor, right_motor] = line.line_following(distance_Black)
-
-        ############################# assumption code #################
-        # if the robot doesn't turn:
+            ############################# get motor speed #######################
+            # assume we get a command from webapp, next line is blue line
             # if distance_Black:
-                # if not some_color(get from webapp):
+            #     if not distance_Blue:
+            #         [left_motor, right_motor] = line.line_following(distance_Black)
+            #     else:
+            #         [left_motor, right_motor] = line.line_following(distance_Blue)
+            # if not distance_Black:
+            #     if not distance_Red and not distance_Blue:
+            #         [left_motor, right_motor] = [-200, 200]
+            #     elif distance_Blue:
+            #         [left_motor, right_motor] = line.line_following(distance_Blue)
+            #     elif distance_Red:
+            #         [left_motor, right_motor] = line.line_following(distance_Red)
+            # if distance_Black:
+            #     [left_motor, right_motor] = line.line_following(distance_Black)
+
+            ############################# assumption code #################
+            # if the robot doesn't turn:
+                # if distance_Black:
+                    # if not some_color(get from webapp):
+                        # line_following(black)
+                    # elif some_color(get from webapp):
+                        # line_following(some_color):
+                # elif not distance_Black:
+                    # if not some_color(get from webapp):
+                        # turn_itself
+                    # elif some_color:
+                        # line_following(some_color)
+
+            # if the robot has already turned:
+                # if signal detected:
+                    # decide turn left or right
+                    # turn left or right, until signal at a "specific position".
+                    # reset turn
                     # line_following(black)
-                # elif some_color(get from webapp):
-                    # line_following(some_color):
-            # elif not distance_Black:
-                # if not some_color(get from webapp):
-                    # turn_itself
-                # elif some_color:
+                # if not signal detected:
                     # line_following(some_color)
 
-        # if the robot has already turned:
-            # if signal detected:
-                # decide turn left or right
-                # turn left or right, until signal at a "specific position".
-                # reset turn
-                # line_following(black)
-            # if not signal detected:
-                # line_following(some_color)
+            # need color signal to specify turn left or right
+            [left_motor, right_motor] = line.line_following(distance_Black)
+            print("left motor speed is {}".format(left_motor))
+            print("right motor speed is {}".format(right_motor))
 
-        # need color signal to specify turn left or right
-        [left_motor, right_motor] = line.line_following(distance_Black)
-        print("left motor speed is {}".format(left_motor))
-        print("right motor speed is {}".format(right_motor))
+            ############################# send command to ev3 ###################
+            s.sendMotorCommand(l_motor=left_motor, r_motor=right_motor)
 
-        ############################# send command to ev3 ###################
-        s.sendMotorCommand(l_motor=left_motor, r_motor=right_motor)
+            ############################# output image TEST #####################
+            # cv2.imshow('img_black',img_black)
+            # cv2.imshow('img_blue', img_blue)
+            # cv2.imshow('img_red',img_red)
+            # cv2.imshow('origin', origin)
+            # cv2.imshow('HSV', HSV)
 
-        ############################# output image TEST #####################
-        # cv2.imshow('img_black',img_black)
-        # cv2.imshow('img_blue', img_blue)
-        # cv2.imshow('img_red',img_red)
-        # cv2.imshow('origin', origin)
-        # cv2.imshow('HSV', HSV)
-
-        k = cv2.waitKey(1) & 0xff
-        if k == 27:
-            break
+            k = cv2.waitKey(1) & 0xff
+            if k == 27:
+                break
     cap.release()
     cv2.destroyAllWindows()
