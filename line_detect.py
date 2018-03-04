@@ -16,8 +16,8 @@ class line_detect():
         self.image_blue = []
         self.image_red = []
         self.slice = 4
-        self.weight = [0.1, 0.2, 0.3, 0.2]
-        self.threshold = 50
+        self.weight = [0.1, 0.2, 0.3, 0.4]
+        self.threshold = 60
 
 
 
