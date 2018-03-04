@@ -268,7 +268,7 @@ class line_detect():
                 elif sum(distance) < 0:
                     return [-100, 0]
             else:
-                return [-200, -200]
+                return [-100, -100]
 
 
 
