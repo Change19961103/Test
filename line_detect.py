@@ -294,6 +294,8 @@ class line_detect():
             elif num == 4:
                 bias = [i*j for i,j in zip(distance, self.weight_4)]
                 bias = sum(bias)
+            print('the distance list is {}'.format(distance))
+            print('the bias is {}'.format(bias))
             if bias > self.threshold:
                 if sum(distance) > 0:
                     return [0,100]
