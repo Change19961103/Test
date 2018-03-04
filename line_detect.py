@@ -367,8 +367,8 @@ if __name__ == '__main__':
             # cv2.imshow('origin', origin)
             # cv2.imshow('HSV', HSV)
 
-            k = cv2.waitKey(1) & 0xff
-            if k == 27:
-                break
+            # k = cv2.waitKey(1) & 0xff
+            # if k == 27:
+            #     break
     cap.release()
     cv2.destroyAllWindows()
