@@ -307,7 +307,7 @@ if __name__ == '__main__':
         # distance_Yellow = line.SlicePart(origin, line.slice, 'YELLOW')
 
         ############################# concatenate every slice ###############
-        img_black = line.RepackImages(line.image_black)
+        # img_black = line.RepackImages(line.image_black)
         # img_blue = line.RepackImages(line.image_blue)
         # img_red = line.RepackImages(line.image_red)
 
@@ -359,7 +359,7 @@ if __name__ == '__main__':
         s.sendMotorCommand(left_motor, right_motor)
 
         ############################# output image TEST #####################
-        cv2.imshow('img_black',img_black)
+        # cv2.imshow('img_black',img_black)
         # cv2.imshow('img_blue', img_blue)
         # cv2.imshow('img_red',img_red)
         # cv2.imshow('origin', origin)
