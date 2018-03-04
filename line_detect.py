@@ -16,8 +16,11 @@ class line_detect():
         self.image_blue = []
         self.image_red = []
         self.slice = 4
-        self.weight = [0.1, 0.2, 0.3, 0.4]
-        self.threshold = 60
+        self.weight_4 = [0.1, 0.2, 0.2, 0.1]
+        self.weight_3 = [0.1, 0.2, 0.2]
+        self.weight_2 = [0.3, 0.3]
+        self.weight_1 = [0.4]
+        self.threshold = 100
 
 
 
@@ -219,23 +222,43 @@ class line_detect():
         for i in range(slice):
             part = sl*i
             crop_img = im[part:part+sl, 0:self.width]
-            self.image_black.append(crop_img)
-            h, w  = self.image_black[i].shape[:2]
-            middleh = int(h/2)
-            middlew = int(w/2)
             # middlew = middlew - 40
             # print(middlew)
             if color == 'BLACK':
+                self.image_black.append(crop_img)
+                h, w  = self.image_black[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Black(crop_img)
             elif color == 'RED':
+                self.image_black.append(crop_img)
+                h, w  = self.image_red[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Red(crop_img)
             elif color == 'BLUE':
+                self.image_black.append(crop_img)
+                h, w  = self.image_blue[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Blue(crop_img)
             elif color == 'GREEN':
+                self.image_black.append(crop_img)
+                h, w  = self.image_green[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Green(crop_img)
             elif color == 'YELLOW':
+                self.image_black.append(crop_img)
+                h, w  = self.image_yellow[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Yellow(crop_img)
             elif color == 'PURPLE':
+                self.image_black.append(crop_img)
+                h, w  = self.image_purple[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Purple(crop_img)
             contours = self.image_process(img)
             contours = self.contour_process(contours, h, w)
@@ -259,9 +282,18 @@ class line_detect():
         # send command to ev3
         if distance:
             num = len(distance)
-            new_weight = self.weight[-num:]
-            bias = [i*j for i,j in zip(distance, new_weight)]
-            bias = sum(bias)
+            if num == 1:
+                bias = [i*j for i,j in zip(distance, self.weight_1)]
+                bias = sum(bias)
+            elif num == 2:
+                bias = [i*j for i,j in zip(distance, self.weight_2)]
+                bias = sum(bias)
+            elif num == 3:
+                bias = [i*j for i,j in zip(distance, self.weight_3)]
+                bias = sum(bias)
+            elif num == 4:
+                bias = [i*j for i,j in zip(distance, self.weight_4)]
+                bias = sum(bias)
             if bias > self.threshold:
                 if sum(distance) > 0:
                     return [0,100]
