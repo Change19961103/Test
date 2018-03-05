@@ -302,9 +302,9 @@ class line_detect():
             speed = attenuate(bias/4, -40, 40)
             if abs(bias) > self.threshold:
                 if bias > 0:
-                    return [20, 20+speed]
+                    return [10, 20+speed]
                 else:
-                    return [20+abs(speed), 20]
+                    return [20+abs(speed), 10]
             else:
                 return [50, 50]
 
@@ -412,10 +412,10 @@ if __name__ == '__main__':
             # cv2.imshow('origin', origin)
             # cv2.imshow('HSV', HSV)
 
-            time.sleep(0.005)
 
             # k = cv2.waitKey(1) & 0xff
             # if k == 27:
             #     break
+            time.sleep(0.005)
     cap.release()
     cv2.destroyAllWindows()
