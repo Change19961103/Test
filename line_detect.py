@@ -400,9 +400,9 @@ if __name__ == '__main__':
             print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
-            schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
+            # schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
             # schedule.run()
-            # s.sendMotorCommand(int(-100), int(-100))
+            s.sendMotorCommand(int(left_motor), int(right_motor))
 
             ############################# output image TEST #####################
             # cv2.imshow('img_black',img_black)
