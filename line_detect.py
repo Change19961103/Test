@@ -311,7 +311,7 @@ class line_detect():
 if __name__ == '__main__':
     line = line_detect()
     cap = cv2.VideoCapture(0)
-    schedule = sched.scheduler(time.time, time.sleep)
+    # schedule = sched.scheduler(time.time, time.sleep)
     s = Server(5005)
     # cap = cv2.VideoCapture("test.MOV")
     cap.set(cv2.CAP_PROP_FRAME_WIDTH,line.width)
@@ -400,8 +400,8 @@ if __name__ == '__main__':
             print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
-            schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
-            schedule.run()
+            # schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
+            # schedule.run()
             # s.sendMotorCommand(int(-100), int(-100))
 
             ############################# output image TEST #####################
