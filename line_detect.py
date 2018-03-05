@@ -3,7 +3,7 @@
 import numpy as np
 import cv2
 from tcp_rpi import *
-import time
+import time, sched
 
 
 class line_detect():
@@ -211,7 +211,7 @@ class line_detect():
     def getContourExtent(self, contour):
         area = cv2.contourArea(contour)
         x,y,w,h = cv2.boundingRect(contour)
-        rect_area = w*h
+        rect_area = w*h*3
         if rect_area > 0:
             return (float(area)/rect_area)
 
@@ -271,10 +271,11 @@ class line_detect():
                 contourCenterX = self.getContourCenter(contours[0])[0]
                 cv2.circle(crop_img, (contourCenterX, middleh), 7, (255,255,255), -1) #Draw dX circle WHITE
                 font = cv2.FONT_HERSHEY_SIMPLEX
-                # cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
-                # cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
+                cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
+                cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
+                bias = int(middlew-contourCenterX) * self.getContourExtent(contours[0])
             # record the bias distance
-                distance.append(middlew-contourCenterX)
+                distance.append(bias)
         return distance[::-1]
 
 
@@ -282,35 +283,35 @@ class line_detect():
         # threshold of corner
         # send command to ev3
         if distance:
-            num = len(distance)
-            if num == 1:
-                bias = [i*j for i,j in zip(distance, self.weight_1)]
-                bias = sum(bias)
-            elif num == 2:
-                bias = [i*j for i,j in zip(distance, self.weight_2)]
-                bias = sum(bias)
-            elif num == 3:
-                bias = [i*j for i,j in zip(distance, self.weight_3)]
-                bias = sum(bias)
-            elif num == 4:
-                bias = [i*j for i,j in zip(distance, self.weight_4)]
-                bias = sum(bias)
+            # num = len(distance)
+            # if num == 1:
+            #     bias = [i*j for i,j in zip(distance, self.weight_1)]
+            #     bias = sum(bias)
+            # elif num == 2:
+            #     bias = [i*j for i,j in zip(distance, self.weight_2)]
+            #     bias = sum(bias)
+            # elif num == 3:
+            #     bias = [i*j for i,j in zip(distance, self.weight_3)]
+            #     bias = sum(bias)
+            # elif num == 4:
+            #     bias = [i*j for i,j in zip(distance, self.weight_4)]
+            #     bias = sum(bias)
+            bias = sum(distance)
             print('the distance list is {}'.format(distance))
             print('the bias is {}'.format(bias))
             if abs(bias) > self.threshold:
-                if distance[-1] > 0:
+                if sum(distance) > 0:
                     return [0,50]
-                elif distance[-1] < 0:
-                    return [50,0]
+                elif sum(distance) < 0:
+                    return [50, 0]
             else:
                 return [50, 50]
-
 
 
 if __name__ == '__main__':
     line = line_detect()
     cap = cv2.VideoCapture(0)
-
+    schedule = sched.scheduler(time.time, time.sleep)
     s = Server(5005)
     # cap = cv2.VideoCapture("test.MOV")
     cap.set(cv2.CAP_PROP_FRAME_WIDTH,line.width)
@@ -399,7 +400,8 @@ if __name__ == '__main__':
             print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
-            s.sendMotorCommand(int(left_motor), int(right_motor))
+            schedule.enter(1, 0, s.sendMotorCommand(int(left_motor), int(right_motor)))
+            schedule.run()
             # s.sendMotorCommand(int(-100), int(-100))
 
             ############################# output image TEST #####################
