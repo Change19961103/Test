@@ -21,7 +21,7 @@ class line_detect():
         self.weight_3 = [0.3, 0.3, 0.3]
         self.weight_2 = [0.45, 0.45]
         self.weight_1 = [0.9]
-        self.threshold = 60
+        self.threshold = 50
 
 
 
@@ -317,6 +317,8 @@ if __name__ == '__main__':
     # cap = cv2.VideoCapture("test.MOV")
     cap.set(cv2.CAP_PROP_FRAME_WIDTH,line.width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT,line.height)
+    prev_l = 0
+    prev_r = 0
     # turn = False
     # while(1):
     #     s.sendMotorCommand(0,50)
@@ -393,8 +395,6 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            prev_l = 0
-            prev_r = 0
             if distance_Black:
                 [left_motor, right_motor] = line.line_following(distance_Black)
                 prev_l = left_motor
