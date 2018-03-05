@@ -392,11 +392,13 @@ if __name__ == '__main__':
             # need color signal to specify turn left or right
             if distance_Black:
                 [left_motor, right_motor] = line.line_following(distance_Black)
-                print("left motor speed is {}".format(left_motor))
-                print("right motor speed is {}".format(right_motor))
+            else:
+                [left_motor, right_motor] = [50, 50]
+            print("left motor speed is {}".format(left_motor))
+            print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
-                s.sendMotorCommand(int(left_motor), int(right_motor))
+            s.sendMotorCommand(int(left_motor), int(right_motor))
             # s.sendMotorCommand(int(-100), int(-100))
 
             ############################# output image TEST #####################
