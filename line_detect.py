@@ -278,6 +278,8 @@ class line_detect():
                 distance.append(bias)
         return distance[::-1]
 
+    def minmax(self, value):
+        if value
 
     def line_following(self, distance):
         # threshold of corner
@@ -299,11 +301,12 @@ class line_detect():
             bias = sum(distance)
             print('the distance list is {}'.format(distance))
             print('the bias is {}'.format(bias))
+            speed = attenuate(bias/5, -50, 50)
             if abs(bias) > self.threshold:
                 if sum(distance) > 0:
-                    return [20, bias/3]
+                    return [50-speed, 50+speed]
                 elif sum(distance) < 0:
-                    return [bias/3, 20]
+                    return [50+speed, 50-speed]
             else:
                 return [50, 50]
 
