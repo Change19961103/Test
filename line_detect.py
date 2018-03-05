@@ -277,9 +277,7 @@ class line_detect():
             # record the bias distance
                 distance.append(bias)
         return distance[::-1]
-
-    def minmax(self, value):
-        if value
+        
 
     def line_following(self, distance):
         # threshold of corner
