@@ -297,7 +297,7 @@ class line_detect():
                 bias = sum(bias)
             print('the distance list is {}'.format(distance))
             print('the bias is {}'.format(bias))
-            if bias > self.threshold:
+            if abs(bias) > self.threshold:
                 if distance[-1] > 0:
                     return [0,50]
                 elif distance[-1] < 0:
