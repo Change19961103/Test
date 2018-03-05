@@ -299,12 +299,12 @@ class line_detect():
             bias = sum(distance)
             print('the distance list is {}'.format(distance))
             print('the bias is {}'.format(bias))
-            speed = attenuate(bias/5, -20, 20)
+            speed = attenuate(bias/4, -40, 40)
             if abs(bias) > self.threshold:
                 if bias > 0:
-                    return [20-speed, 20+speed]
+                    return [20, 20+speed]
                 else:
-                    return [20-speed, 20+speed]
+                    return [20+abs(speed), 20]
             else:
                 return [50, 50]
 
