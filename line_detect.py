@@ -21,7 +21,7 @@ class line_detect():
         self.weight_3 = [0.3, 0.3, 0.3]
         self.weight_2 = [0.45, 0.45]
         self.weight_1 = [0.9]
-        self.threshold = 50
+        self.threshold = 60
 
 
 
@@ -273,7 +273,8 @@ class line_detect():
                 font = cv2.FONT_HERSHEY_SIMPLEX
                 cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
                 cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
-                bias = int(middlew-contourCenterX) * self.getContourExtent(contours[0])
+                # bias = int(middlew-contourCenterX) * self.getContourExtent(contours[0])
+                bias = int(middlew-contourCenterX)
             # record the bias distance
                 distance.append(bias)
         return distance[::-1]
