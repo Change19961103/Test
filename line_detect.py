@@ -207,12 +207,12 @@ class line_detect():
 
 
 
-    # def getContourExtent(self, contour):
-    #     area = cv2.contourArea(contour)
-    #     x,y,w,h = cv2.boundingRect(contour)
-    #     rect_area = w*h
-    #     if rect_area > 0:
-    #         return (float(area)/rect_area)
+    def getContourExtent(self, contour):
+        area = cv2.contourArea(contour)
+        x,y,w,h = cv2.boundingRect(contour)
+        rect_area = w*h
+        if rect_area > 0:
+            return (float(area)/rect_area)
 
 
     def SlicePart(self, im, slice, color):
@@ -270,7 +270,7 @@ class line_detect():
                 contourCenterX = self.getContourCenter(contours[0])[0]
                 cv2.circle(crop_img, (contourCenterX, middleh), 7, (255,255,255), -1) #Draw dX circle WHITE
                 font = cv2.FONT_HERSHEY_SIMPLEX
-                cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
+                # cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
                 # cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
             # record the bias distance
                 distance.append(middlew-contourCenterX)
