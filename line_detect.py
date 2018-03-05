@@ -17,10 +17,10 @@ class line_detect():
         self.image_blue = []
         self.image_red = []
         self.slice = 4
-        self.weight_4 = [0.1, 0.2, 0.2, 0.1]
-        self.weight_3 = [0.1, 0.2, 0.2]
-        self.weight_2 = [0.3, 0.3]
-        self.weight_1 = [0.4]
+        self.weight_4 = [0.23, 0.23, 0.23, 0.23]
+        self.weight_3 = [0.3, 0.3, 0.3]
+        self.weight_2 = [0.45, 0.4.5]
+        self.weight_1 = [0.9]
         self.threshold = 60
 
 
@@ -283,28 +283,28 @@ class line_detect():
         # threshold of corner
         # send command to ev3
         if distance:
-            # num = len(distance)
-            # if num == 1:
-            #     bias = [i*j for i,j in zip(distance, self.weight_1)]
-            #     bias = sum(bias)
-            # elif num == 2:
-            #     bias = [i*j for i,j in zip(distance, self.weight_2)]
-            #     bias = sum(bias)
-            # elif num == 3:
-            #     bias = [i*j for i,j in zip(distance, self.weight_3)]
-            #     bias = sum(bias)
-            # elif num == 4:
-            #     bias = [i*j for i,j in zip(distance, self.weight_4)]
-            #     bias = sum(bias)
-            bias = sum(distance)
+            num = len(distance)
+            if num == 1:
+                bias = [i*j for i,j in zip(distance, self.weight_1)]
+                bias = sum(bias)
+            elif num == 2:
+                bias = [i*j for i,j in zip(distance, self.weight_2)]
+                bias = sum(bias)
+            elif num == 3:
+                bias = [i*j for i,j in zip(distance, self.weight_3)]
+                bias = sum(bias)
+            elif num == 4:
+                bias = [i*j for i,j in zip(distance, self.weight_4)]
+                bias = sum(bias)
+            # bias = sum(distance)
             print('the distance list is {}'.format(distance))
             print('the bias is {}'.format(bias))
             speed = attenuate(bias/4, -40, 40)
             if abs(bias) > self.threshold:
                 if bias > 0:
-                    return [10, 20+speed]
+                    return [15, 20+speed]
                 else:
-                    return [20+abs(speed), 10]
+                    return [20+abs(speed), 15]
             else:
                 return [50, 50]
 
