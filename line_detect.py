@@ -21,7 +21,7 @@ class line_detect():
         self.weight_3 = [0.3, 0.3, 0.3]
         self.weight_2 = [0.45, 0.45]
         self.weight_1 = [0.9]
-        self.threshold = 60
+        self.threshold = 50
 
 
 
