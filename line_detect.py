@@ -298,11 +298,11 @@ class line_detect():
             print('the bias is {}'.format(bias))
             if bias > self.threshold:
                 if distance[-1] > 0:
-                    return [-80,80]
+                    return [0,50]
                 elif distance[-1] < 0:
-                    return [80,-80]
+                    return [50,0]
             else:
-                return [80, 80]
+                return [50, 50]
 
 
 
