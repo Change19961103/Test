@@ -3,6 +3,7 @@
 import numpy as np
 import cv2
 from tcp_rpi import *
+import time
 
 
 class line_detect():
@@ -228,37 +229,37 @@ class line_detect():
                 self.image_black.append(crop_img)
                 h, w  = self.image_black[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)
+                middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Black(crop_img)
             elif color == 'RED':
                 self.image_black.append(crop_img)
                 h, w  = self.image_red[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)
+                middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Red(crop_img)
             elif color == 'BLUE':
                 self.image_black.append(crop_img)
                 h, w  = self.image_blue[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)
+                middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Blue(crop_img)
             elif color == 'GREEN':
                 self.image_black.append(crop_img)
                 h, w  = self.image_green[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)
+                middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Green(crop_img)
             elif color == 'YELLOW':
                 self.image_black.append(crop_img)
                 h, w  = self.image_yellow[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)
+                middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Yellow(crop_img)
             elif color == 'PURPLE':
                 self.image_black.append(crop_img)
                 h, w  = self.image_purple[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)
+                middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Purple(crop_img)
             contours = self.image_process(img)
             contours = self.contour_process(contours, h, w)
@@ -407,6 +408,8 @@ if __name__ == '__main__':
             # cv2.imshow('img_red',img_red)
             # cv2.imshow('origin', origin)
             # cv2.imshow('HSV', HSV)
+
+            time.sleep(0.005)
 
             # k = cv2.waitKey(1) & 0xff
             # if k == 27:
