@@ -396,7 +396,7 @@ if __name__ == '__main__':
             if distance_Black:
                 [left_motor, right_motor] = line.line_following(distance_Black)
             else:
-                [left_motor, right_motor] = [-40, 40]
+                [left_motor, right_motor] = [-40, -40]
             print("left motor speed is {}".format(left_motor))
             print("right motor speed is {}".format(right_motor))
 
