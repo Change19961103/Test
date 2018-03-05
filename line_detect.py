@@ -21,7 +21,7 @@ class line_detect():
         self.weight_3 = [0.1, 0.2, 0.2]
         self.weight_2 = [0.3, 0.3]
         self.weight_1 = [0.4]
-        self.threshold = 70
+        self.threshold = 90
 
 
 
@@ -301,9 +301,9 @@ class line_detect():
             print('the bias is {}'.format(bias))
             if abs(bias) > self.threshold:
                 if sum(distance) > 0:
-                    return [0,50]
+                    return [20, bias/3]
                 elif sum(distance) < 0:
-                    return [50, 0]
+                    return [bias/3, 20]
             else:
                 return [50, 50]
 
