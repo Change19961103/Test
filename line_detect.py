@@ -21,7 +21,7 @@ class line_detect():
         self.weight_3 = [0.3, 0.3, 0.3]
         self.weight_2 = [0.45, 0.45]
         self.weight_1 = [0.9]
-        self.threshold = 50
+        self.threshold = 70
 
 
 
@@ -303,9 +303,9 @@ class line_detect():
             speed = attenuate(bias/4, -40, 40)
             if abs(bias) > self.threshold:
                 if bias > 0:
-                    return [15, 20+speed]
+                    return [20, 20+speed]
                 else:
-                    return [20+abs(speed), 15]
+                    return [20+abs(speed), 20]
             else:
                 return [50, 50]
 
