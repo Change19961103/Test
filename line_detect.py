@@ -396,10 +396,14 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            if distance_Black:
+            if distance_Blue:
+                [left_motor, right_motor] = line.line_following(distance_Blue)
+                prev_l = left_motor
+                prev_r = right_motor
+            elif not distance_Blue:
                 [left_motor, right_motor] = line.line_following(distance_Black)
-                prev_r = left_motor
-                prev_l = right_motor
+                prev_l = left_motor
+                prev_r = right_motor
             else:
                 [left_motor, right_motor] = [-prev_l, -prev_r]
             print("left motor speed is {}".format(left_motor))
