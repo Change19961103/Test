@@ -9,10 +9,10 @@ import time, sched
 class line_detect():
 
     def __init__(self):
-        self.width = 640
-        self.height = 480
-        # self.width = 1920
-        # self.height = 1080
+        # self.width = 640
+        # self.height = 480
+        # self.width = 320
+        # self.height = 240
         self.image_black = []
         self.image_blue = []
         self.image_red = []
@@ -264,15 +264,15 @@ class line_detect():
             contours = self.image_process(img)
             contours = self.contour_process(contours, h, w)
             # print(contours)
-            cv2.drawContours(crop_img, contours,-1,(0,255,0),3)
+            # cv2.drawContours(crop_img, contours,-1,(0,255,0),3)
             # dis = int((middlew-contourCenterX) * self.getContourExtent(contours[0]))
-            cv2.circle(crop_img, (middlew, middleh), 7, (0,0,255), -1) #Draw middle circle RED
+            # cv2.circle(crop_img, (middlew, middleh), 7, (0,0,255), -1) #Draw middle circle RED
             if contours:
                 contourCenterX = self.getContourCenter(contours[0])[0]
-                cv2.circle(crop_img, (contourCenterX, middleh), 7, (255,255,255), -1) #Draw dX circle WHITE
-                font = cv2.FONT_HERSHEY_SIMPLEX
-                cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
-                cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
+                # cv2.circle(crop_img, (contourCenterX, middleh), 7, (255,255,255), -1) #Draw dX circle WHITE
+                # font = cv2.FONT_HERSHEY_SIMPLEX
+                # cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
+                # cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
                 # bias = int(middlew-contourCenterX) * self.getContourExtent(contours[0])
                 bias = int(middlew-contourCenterX)
             # record the bias distance
@@ -338,7 +338,7 @@ if __name__ == '__main__':
 
             ############################# HSV TEST ##############################
             HSV_black = line.RemoveBackground_HSV_Black(origin)
-            # HSV_blue = line.RemoveBackground_HSV_Blue(origin)
+            HSV_blue = line.RemoveBackground_HSV_Blue(origin)
             # HSV = line.RemoveBackground_HSV_Green(origin)
             # HSV = line.RemoveBackground_HSV_Yellow(origin)
             # HSV = line.RemoveBackground_HSV_Purple(origin)
@@ -346,7 +346,7 @@ if __name__ == '__main__':
 
             ############################# get distance between middle of vision and line #########################
             distance_Black = line.SlicePart(HSV_black, line.slice, 'BLACK')
-            # distance_Blue = line.SlicePart(HSV_blue, line.slice, 'BLUE')
+            distance_Blue = line.SlicePart(HSV_blue, line.slice, 'BLUE')
             # distance_Green = line.SlicePart(origin, line.slice, 'GREEN')
             # distance_Red = line.SlicePart(HSV_red, line.slice, 'RED')
             # distance_Yellow = line.SlicePart(origin, line.slice, 'YELLOW')
@@ -396,14 +396,18 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            if distance_Blue:
-                [left_motor, right_motor] = line.line_following(distance_Blue)
-                prev_l = left_motor
-                prev_r = right_motor
-            elif not distance_Blue:
+            if distance_Black:
                 [left_motor, right_motor] = line.line_following(distance_Black)
                 prev_l = left_motor
                 prev_r = right_motor
+            # if distance_Blue:
+            #     [left_motor, right_motor] = line.line_following(distance_Blue)
+            #     prev_l = left_motor
+            #     prev_r = right_motor
+            # elif not distance_Blue:
+            #     [left_motor, right_motor] = line.line_following(distance_Black)
+            #     prev_l = left_motor
+            #     prev_r = right_motor
             else:
                 [left_motor, right_motor] = [-prev_l, -prev_r]
             print("left motor speed is {}".format(left_motor))
