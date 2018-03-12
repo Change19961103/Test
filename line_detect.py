@@ -16,6 +16,9 @@ class line_detect():
         self.image_black = []
         self.image_blue = []
         self.image_red = []
+        self.image_purple = []
+        self.image_green = []
+        self.image_yellow = []
         self.slice = 4
         self.weight_4 = [0.23, 0.23, 0.23, 0.23]
         self.weight_3 = [0.3, 0.3, 0.3]
@@ -313,11 +316,11 @@ class line_detect():
     def turn_R_angle(self, dir):
         if dir == 'right':
             # for time in range(1,3):
-
+            pass
         elif dir == 'left':
-
+            pass
         elif dir == 'none':
-
+            pass
 
 
 if __name__ == '__main__':
@@ -328,7 +331,7 @@ if __name__ == '__main__':
     # cap = cv2.VideoCapture("test.MOV")
     cap.set(cv2.CAP_PROP_FRAME_WIDTH,line.width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT,line.height)
-    cap.set(CV_CAP_PROP_FPS,line.FPS_limit);
+    cap.set(cv2.CAP_PROP_FPS,line.FPS_limit);
     prev_l = 0
     prev_r = 0
     # turn = False
