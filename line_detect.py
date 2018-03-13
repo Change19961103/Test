@@ -327,11 +327,9 @@ class line_detect():
     def turn_R_angle(self, dir):
         if dir == 'right':
             # for time in range(1,3):
-            pass
+            s.sendTurnCommand(90)
         elif dir == 'left':
-            pass
-        elif dir == 'none':
-            pass
+            s.sendTurnCommand(-90)
 
 
 if __name__ == '__main__':
@@ -345,6 +343,7 @@ if __name__ == '__main__':
     cap.set(cv2.CAP_PROP_FPS,line.FPS_limit);
     prev_l = 0
     prev_r = 0
+    decision = False
     # turn = False
     # while(1):
     #     s.sendMotorCommand(0,50)
@@ -423,16 +422,20 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            print(dest)
-            if not dest:
-                if distance_Black:
-                    [left_motor, right_motor] = line.line_following(distance_Black)
-                    prev_l = left_motor
-                    prev_r = right_motor
+            if decision == False:
+                if not dest:
+                    if distance_Blue:
+                        line.turn_R_angle('left')
+                    elif distance_Black:
+                        [left_motor, right_motor] = line.line_following(distance_Black)
+                        prev_l = left_motor
+                        prev_r = right_motor
+                    else:
+                        [left_motor, right_motor] = [-prev_l, -prev_r]
                 else:
-                    [left_motor, right_motor] = [-prev_l, -prev_r]
+                    decision = True
             else:
-                [left_motor, right_motor] = [0, 0]
+                [left_motor, right_motor] = [0,0]
             # if distance_Blue:
             #     [left_motor, right_motor] = line.line_following(distance_Blue)
             #     prev_l = left_motor
