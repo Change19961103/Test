@@ -427,21 +427,22 @@ if __name__ == '__main__':
             #     [left_motor, right_motor] = line.line_following(distance_Black)
 
             ############################# assumption code #################
-            # if distance_Blue:
-            # elif distance_Black:
-            #     [left_motor, right_motor] = line.line_following(distance_Black)
-            #     prev_l = left_motor
-            #     prev_r = right_motor
-            # else:
-            #     [left_motor, right_motor] = [-prev_l, -prev_r]
-            print(dest)
-            if not dest:
-                if distance_Black:
-                    [left_motor, right_motor] = line.line_following(distance_Black)
-                    prev_l = left_motor
-                    prev_r = right_motor
-                else:
-                    [left_motor, right_motor] = [-prev_l, -prev_r]
+            if distance_Blue:
+                line.turn_R_angle('left')
+            elif distance_Black:
+                [left_motor, right_motor] = line.line_following(distance_Black)
+                prev_l = left_motor
+                prev_r = right_motor
+            else:
+                [left_motor, right_motor] = [-prev_l, -prev_r]
+            # print(dest)
+            # if not dest:
+            #     if distance_Black:
+            #         [left_motor, right_motor] = line.line_following(distance_Black)
+            #         prev_l = left_motor
+            #         prev_r = right_motor
+            #     else:
+            #         [left_motor, right_motor] = [-prev_l, -prev_r]
 
             s.sendMotorCommand(int(left_motor), int(right_motor))
             print("left motor speed is {}".format(left_motor))
