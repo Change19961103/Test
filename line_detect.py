@@ -436,17 +436,14 @@ if __name__ == '__main__':
             #     [left_motor, right_motor] = [-prev_l, -prev_r]
             print(dest)
             if not dest:
-                if distance_Black：
+                if distance_Black:
                     [left_motor, right_motor] = line.line_following(distance_Black)
                     prev_l = left_motor
                     prev_r = right_motor
-                    s.sendMotorCommand(int(left_motor), int(right_motor))
-            else:
-                s.sendTurnCommand(180)
 
-            if prev_l != left_motor or right_motor != prev_r:
-                print("left motor speed is {}".format(left_motor))
-                print("right motor speed is {}".format(right_motor))
+            s.sendMotorCommand(int(left_motor), int(right_motor))
+            print("left motor speed is {}".format(left_motor))
+            print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
             # schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
