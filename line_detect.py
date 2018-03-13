@@ -244,43 +244,43 @@ class line_detect():
                 self.image_black.append(crop_img)
                 h, w  = self.image_black[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Black(crop_img)
             elif color == 'RED':
                 self.image_red.append(crop_img)
                 h, w  = self.image_red[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Red(crop_img)
             elif color == 'BLUE':
                 self.image_blue.append(crop_img)
                 h, w  = self.image_blue[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Blue(crop_img)
             elif color == 'GREEN':
                 self.image_green.append(crop_img)
                 h, w  = self.image_green[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Green(crop_img)
             elif color == 'YELLOW':
                 self.image_yellow.append(crop_img)
                 h, w  = self.image_yellow[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Yellow(crop_img)
             elif color == 'PURPLE':
                 self.image_purple.append(crop_img)
                 h, w  = self.image_purple[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_Purple(crop_img)
             elif color == 'WHITE':
                 self.image_white.append(crop_img)
                 h, w  = self.image_white[i].shape[:2]
                 middleh = int(h/2)
-                middlew = int(w/2)-70
+                middlew = int(w/2)
                 img = self.RemoveBackground_HSV_White(crop_img)
             contours = self.image_process(img)
             contours = self.contour_process(contours, h, w)
