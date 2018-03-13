@@ -246,47 +246,52 @@ class line_detect():
                 middleh = int(h/2)
                 middlew = int(w/2)-70
                 img = self.RemoveBackground_HSV_Black(crop_img)
-            # elif color == 'RED':
-            #     self.image_black.append(crop_img)
-            #     h, w  = self.image_red[i].shape[:2]
-            #     middleh = int(h/2)
-            #     middlew = int(w/2)-70
-            #     img = self.RemoveBackground_HSV_Red(crop_img)
-            # elif color == 'BLUE':
-            #     self.image_black.append(crop_img)
-            #     h, w  = self.image_blue[i].shape[:2]
-            #     middleh = int(h/2)
-            #     middlew = int(w/2)-70
-            #     img = self.RemoveBackground_HSV_Blue(crop_img)
-            # elif color == 'GREEN':
-            #     self.image_black.append(crop_img)
-            #     h, w  = self.image_green[i].shape[:2]
-            #     middleh = int(h/2)
-            #     middlew = int(w/2)-70
-            #     img = self.RemoveBackground_HSV_Green(crop_img)
-            # elif color == 'YELLOW':
-            #     self.image_black.append(crop_img)
-            #     h, w  = self.image_yellow[i].shape[:2]
-            #     middleh = int(h/2)
-            #     middlew = int(w/2)-70
-            #     img = self.RemoveBackground_HSV_Yellow(crop_img)
-            # elif color == 'PURPLE':
-            #     self.image_black.append(crop_img)
-            #     h, w  = self.image_purple[i].shape[:2]
-            #     middleh = int(h/2)
-            #     middlew = int(w/2)-70
-            #     img = self.RemoveBackground_HSV_Purple(crop_img)
+            elif color == 'RED':
+                self.image_red.append(crop_img)
+                h, w  = self.image_red[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)-70
+                img = self.RemoveBackground_HSV_Red(crop_img)
+            elif color == 'BLUE':
+                self.image_blue.append(crop_img)
+                h, w  = self.image_blue[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)-70
+                img = self.RemoveBackground_HSV_Blue(crop_img)
+            elif color == 'GREEN':
+                self.image_green.append(crop_img)
+                h, w  = self.image_green[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)-70
+                img = self.RemoveBackground_HSV_Green(crop_img)
+            elif color == 'YELLOW':
+                self.image_yellow.append(crop_img)
+                h, w  = self.image_yellow[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)-70
+                img = self.RemoveBackground_HSV_Yellow(crop_img)
+            elif color == 'PURPLE':
+                self.image_purple.append(crop_img)
+                h, w  = self.image_purple[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)-70
+                img = self.RemoveBackground_HSV_Purple(crop_img)
+            elif color == 'WHITE':
+                self.image_white.append(crop_img)
+                h, w  = self.image_white[i].shape[:2]
+                middleh = int(h/2)
+                middlew = int(w/2)-70
+                img = self.RemoveBackground_HSV_White(crop_img)
             contours = self.image_process(img)
             contours = self.contour_process(contours, h, w)
             # print(contours)
-            # cv2.drawContours(crop_img, contours,-1,(0,255,0),3)
-            # dis = int((middlew-contourCenterX) * self.getContourExtent(contours[0]))
-            # cv2.circle(crop_img, (middlew, middleh), 7, (0,0,255), -1) #Draw middle circle RED
+            cv2.drawContours(crop_img, contours,-1,(0,255,0),3)
+            cv2.circle(crop_img, (middlew, middleh), 7, (0,0,255), -1) #Draw middle circle RED
             if contours:
                 contourCenterX = self.getContourCenter(contours[0])[0]
-                # cv2.circle(crop_img, (contourCenterX, middleh), 7, (255,255,255), -1) #Draw dX circle WHITE
-                # font = cv2.FONT_HERSHEY_SIMPLEX
-                # cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
+                cv2.circle(crop_img, (contourCenterX, middleh), 7, (255,255,255), -1) #Draw dX circle WHITE
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                cv2.putText(crop_img,str(middlew-contourCenterX),(contourCenterX+20, middleh), font, 1,(200,0,200),2,cv2.LINE_AA)
                 # cv2.putText(crop_img,"Weight:%.3f"%self.getContourExtent(contours[0]),(contourCenterX+20, middleh+35), font, 0.5,(200,0,200),1,cv2.LINE_AA)
                 # bias = int(middlew-contourCenterX) * self.getContourExtent(contours[0])
                 bias = int(middlew-contourCenterX)
@@ -324,6 +329,20 @@ class line_detect():
             else:
                 return [50, 50]
 
+
+    def RemoveBackground_HSV_White(self,image):
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        lower = np.array([0,0,0])
+        upper = np.array([0,0,150])
+
+        mask = cv2.inRange(hsv, lower, upper)
+        kernel = np.ones((5,5),np.uint8)
+        mask = cv2.dilate(mask,kernel,iterations=5)
+        mask = cv2.erode(mask,kernel,iterations=4)
+        image = cv2.bitwise_and(image,image, mask=mask)
+        return image
+        
+
     def turn_R_angle(self, dir):
         if dir == 'right':
             # for time in range(1,3):
@@ -356,6 +375,10 @@ if __name__ == '__main__':
             line.image_red = []
             line.image_blue = []
             line.image_black = []
+            line.image_purple = []
+            line.image_green = []
+            line.image_yellow = []
+            line.image_white = []
             dest = line.dest_detect(origin)
             # for i in range(line.slice):
             #     line.image_red.append(0)
@@ -364,18 +387,22 @@ if __name__ == '__main__':
 
             ############################# HSV TEST ##############################
             HSV_black = line.RemoveBackground_HSV_Black(origin)
-            # HSV_blue = line.RemoveBackground_HSV_Blue(origin)
-            # HSV = line.RemoveBackground_HSV_Green(origin)
-            # HSV = line.RemoveBackground_HSV_Yellow(origin)
-            # HSV = line.RemoveBackground_HSV_Purple(origin)
-            # HSV_red = line.RemoveBackground_HSV_Red(origin)
+            HSV_blue = line.RemoveBackground_HSV_Blue(origin)
+            HSV_green = line.RemoveBackground_HSV_Green(origin)
+            HSV_yellow = line.RemoveBackground_HSV_Yellow(origin)
+            HSV_purple = line.RemoveBackground_HSV_Purple(origin)
+            HSV_red = line.RemoveBackground_HSV_Red(origin)
+            HSV_purple = line.RemoveBackground_HSV_Purple(origin)
+            HSV_white = line.RemoveBackground_HSV_White(origin)
 
             ############################# get distance between middle of vision and line #########################
             distance_Black = line.SlicePart(HSV_black, line.slice, 'BLACK')
-            # distance_Blue = line.SlicePart(HSV_blue, line.slice, 'BLUE')
-            # distance_Green = line.SlicePart(origin, line.slice, 'GREEN')
-            # distance_Red = line.SlicePart(HSV_red, line.slice, 'RED')
-            # distance_Yellow = line.SlicePart(origin, line.slice, 'YELLOW')
+            distance_Blue = line.SlicePart(HSV_blue, line.slice, 'BLUE')
+            distance_Green = line.SlicePart(origin, line.slice, 'GREEN')
+            distance_Red = line.SlicePart(HSV_red, line.slice, 'RED')
+            distance_Yellow = line.SlicePart(origin, line.slice, 'YELLOW')
+            disatnce_Purple = line.SlicePart(HSV_purple, line.slice, 'PURPLE')
+            disatnce_White = line.SlicePart(HSV_white, line.slice, 'WHITE')
 
             ############################# concatenate every slice ###############
             # img_black = line.RepackImages(line.image_black)
@@ -422,20 +449,14 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            if decision == False:
-                if not dest:
-                    if distance_Blue:
-                        line.turn_R_angle('left')
-                    elif distance_Black:
-                        [left_motor, right_motor] = line.line_following(distance_Black)
-                        prev_l = left_motor
-                        prev_r = right_motor
-                    else:
-                        [left_motor, right_motor] = [-prev_l, -prev_r]
-                else:
-                    decision = True
+            if distance_Blue:
+                line.turn_R_angle('left')
+            elif distance_Black:
+                [left_motor, right_motor] = line.line_following(distance_Black)
+                prev_l = left_motor
+                prev_r = right_motor
             else:
-                [left_motor, right_motor] = [0,0]
+                [left_motor, right_motor] = [-prev_l, -prev_r]
             # if distance_Black:
             #     [left_motor, right_motor] = line.line_following(distance_Black)
             #     prev_l = left_motor
@@ -451,8 +472,9 @@ if __name__ == '__main__':
             #     [left_motor, right_motor] = line.line_following(distance_Black)
             #     prev_l = left_motor
             #     prev_r = right_motor
-            print("left motor speed is {}".format(left_motor))
-            print("right motor speed is {}".format(right_motor))
+            if prev_l != left_motor or right_motor != prev_r:
+                print("left motor speed is {}".format(left_motor))
+                print("right motor speed is {}".format(right_motor))
 
             ############################# send command to ev3 ###################
             # schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
