@@ -459,7 +459,8 @@ if __name__ == '__main__':
                 else:
                     [left_motor, right_motor] = [-prev_l, -prev_r]
             else:
-                [left_motor, right_motor] = [0,0]
+                s.sendMotorCommand(0,0)
+                break
             # if distance_Black:
             #     [left_motor, right_motor] = line.line_following(distance_Black)
             #     prev_l = left_motor
