@@ -436,10 +436,11 @@ if __name__ == '__main__':
             #     [left_motor, right_motor] = [-prev_l, -prev_r]
             print(dest)
             if not dest:
-                [left_motor, right_motor] = line.line_following(distance_Black)
-                prev_l = left_motor
-                prev_r = right_motor
-                s.sendMotorCommand(int(left_motor), int(right_motor))
+                if distance_Black：
+                    [left_motor, right_motor] = line.line_following(distance_Black)
+                    prev_l = left_motor
+                    prev_r = right_motor
+                    s.sendMotorCommand(int(left_motor), int(right_motor))
             else:
                 s.sendTurnCommand(180)
 
