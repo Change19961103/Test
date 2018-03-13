@@ -423,7 +423,8 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            if not circle:
+            print(dest)
+            if not dest:
                 if distance_Black:
                     [left_motor, right_motor] = line.line_following(distance_Black)
                     prev_l = left_motor
