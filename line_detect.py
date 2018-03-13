@@ -341,7 +341,7 @@ class line_detect():
         mask = cv2.erode(mask,kernel,iterations=4)
         image = cv2.bitwise_and(image,image, mask=mask)
         return image
-        
+
 
     def turn_R_angle(self, dir):
         if dir == 'right':
@@ -405,7 +405,7 @@ if __name__ == '__main__':
             disatnce_White = line.SlicePart(HSV_white, line.slice, 'WHITE')
 
             ############################# concatenate every slice ###############
-            # img_black = line.RepackImages(line.image_black)
+            img_black = line.RepackImages(line.image_black)
             # img_blue = line.RepackImages(line.image_blue)
             # img_red = line.RepackImages(line.image_red)
 
@@ -482,7 +482,7 @@ if __name__ == '__main__':
             s.sendMotorCommand(int(left_motor), int(right_motor))
 
             ############################# output image TEST #####################
-            # cv2.imshow('img_black',img_black)
+            cv2.imshow('img_black',img_black)
             # cv2.imshow('img_blue', img_blue)
             # cv2.imshow('img_red',img_red)
             # cv2.imshow('origin', origin)
