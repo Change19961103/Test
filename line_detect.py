@@ -9,10 +9,10 @@ import time, sched
 class line_detect():
 
     def __init__(self):
-        # self.width = 640
-        # self.height = 480
-        self.width = 320
-        self.height = 240
+        self.width = 640
+        self.height = 480
+        # self.width = 320
+        # self.height = 240
         self.image_black = []
         self.image_blue = []
         self.image_red = []
@@ -346,9 +346,9 @@ class line_detect():
     def turn_R_angle(self, dir):
         if dir == 'right':
             # for time in range(1,3):
-            s.sendTurnCommand(90)
+            s.sendTurnCommand(-60)
         elif dir == 'left':
-            s.sendTurnCommand(-90)
+            s.sendTurnCommand(60)
 
 
 if __name__ == '__main__':
@@ -359,7 +359,7 @@ if __name__ == '__main__':
     # cap = cv2.VideoCapture("test.MOV")
     cap.set(cv2.CAP_PROP_FRAME_WIDTH,line.width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT,line.height)
-    cap.set(cv2.CAP_PROP_FPS,line.FPS_limit);
+    # cap.set(cv2.CAP_PROP_FPS,line.FPS_limit);
     prev_l = 0
     prev_r = 0
     decision = False
@@ -406,7 +406,7 @@ if __name__ == '__main__':
 
             ############################# concatenate every slice ###############
             img_black = line.RepackImages(line.image_black)
-            # img_blue = line.RepackImages(line.image_blue)
+            img_blue = line.RepackImages(line.image_blue)
             # img_red = line.RepackImages(line.image_red)
 
             ############################# get motor speed #######################
@@ -427,51 +427,22 @@ if __name__ == '__main__':
             #     [left_motor, right_motor] = line.line_following(distance_Black)
 
             ############################# assumption code #################
-            # if the robot doesn't turn:
-                # if distance_Black:
-                    # if not some_color(get from webapp):
-                        # line_following(black)
-                    # elif some_color(get from webapp):
-                        # line_following(some_color):
-                # elif not distance_Black:
-                    # if not some_color(get from webapp):
-                        # turn_itself
-                    # elif some_color:
-                        # line_following(some_color)
-
-            # if the robot has already turned:
-                # if signal detected:
-                    # decide turn left or right
-                    # turn left or right, until signal at a "specific position".
-                    # reset turn
-                    # line_following(black)
-                # if not signal detected:
-                    # line_following(some_color)
-
-            # need color signal to specify turn left or right
-            if distance_Blue:
-                line.turn_R_angle('left')
-            elif distance_Black:
-                [left_motor, right_motor] = line.line_following(distance_Black)
-                prev_l = left_motor
-                prev_r = right_motor
-            else:
-                [left_motor, right_motor] = [-prev_l, -prev_r]
-            # if distance_Black:
+            # if distance_Blue:
+            # elif distance_Black:
             #     [left_motor, right_motor] = line.line_following(distance_Black)
             #     prev_l = left_motor
             #     prev_r = right_motor
             # else:
             #     [left_motor, right_motor] = [-prev_l, -prev_r]
+            print(dest)
+            if not dest:
+                [left_motor, right_motor] = line.line_following(distance_Black)
+                prev_l = left_motor
+                prev_r = right_motor
+                s.sendMotorCommand(int(left_motor), int(right_motor))
+            else:
+                s.sendTurnCommand(180)
 
-            # if distance_Blue:
-            #     [left_motor, right_motor] = line.line_following(distance_Blue)
-            #     prev_l = left_motor
-            #     prev_r = right_motor
-            # elif not distance_Blue:
-            #     [left_motor, right_motor] = line.line_following(distance_Black)
-            #     prev_l = left_motor
-            #     prev_r = right_motor
             if prev_l != left_motor or right_motor != prev_r:
                 print("left motor speed is {}".format(left_motor))
                 print("right motor speed is {}".format(right_motor))
@@ -479,11 +450,10 @@ if __name__ == '__main__':
             ############################# send command to ev3 ###################
             # schedule.enter(1, 1, s.sendMotorCommand, argument=(int(left_motor), int(right_motor)))
             # schedule.run()
-            s.sendMotorCommand(int(left_motor), int(right_motor))
 
             ############################# output image TEST #####################
             cv2.imshow('img_black',img_black)
-            # cv2.imshow('img_blue', img_blue)
+            cv2.imshow('img_blue', img_blue)
             # cv2.imshow('img_red',img_red)
             # cv2.imshow('origin', origin)
             # cv2.imshow('HSV', HSV)
