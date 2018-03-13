@@ -363,6 +363,7 @@ if __name__ == '__main__':
     prev_l = 0
     prev_r = 0
     decision = False
+    count_turn = 0
     # turn = False
     # while(1):
     #     s.sendMotorCommand(0,50)
@@ -449,18 +450,27 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            # if distance_Blue:
-            #     line.turn_R_angle('left')
-            if not dest:
-                if distance_Black:
+
+            if count_turn == 0:
+                if distance_Blue:
+                    line.turn_R_angle('left')
+                    count_turn += 1
+                elif distance_Black:
                     [left_motor, right_motor] = line.line_following(distance_Black)
                     prev_l = left_motor
                     prev_r = right_motor
                 else:
                     [left_motor, right_motor] = [-prev_l, -prev_r]
-            else:
-                s.sendMotorCommand(0,0)
-                break
+            elif count_turn == 1
+                if distance_Blue:
+                    [left_motor, right_motor] = [0,0]
+                elif distance_Black:
+                    [left_motor, right_motor] = line.line_following(distance_Black)
+                    prev_l = left_motor
+                    prev_r = right_motor
+                else:
+                    [left_motor, right_motor] = [-prev_l, -prev_r]
+
             # if distance_Black:
             #     [left_motor, right_motor] = line.line_following(distance_Black)
             #     prev_l = left_motor
