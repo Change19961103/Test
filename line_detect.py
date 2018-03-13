@@ -320,12 +320,12 @@ class line_detect():
             # bias = sum(distance)
             print('the distance list is {}'.format(distance))
             print('the bias is {}'.format(bias))
-            speed = attenuate(bias/4, -40, 40)
+            speed = attenuate(bias/6, -40, 40)
             if abs(bias) > self.threshold:
                 if bias > 0:
-                    return [20, 20+speed]
+                    return [20-speed , 20+speed]
                 else:
-                    return [20+abs(speed), 20]
+                    return [20+abs(speed), 20 - abs(speed)]
             else:
                 return [50, 50]
 
@@ -353,7 +353,7 @@ class line_detect():
 
 if __name__ == '__main__':
     line = line_detect()
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     # schedule = sched.scheduler(time.time, time.sleep)
     s = Server(5005)
     # cap = cv2.VideoCapture("test.MOV")
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     #     pring('DEBUG: Test for sending (0,50) to ev3')
     while(1):
         ret, origin = cap.read()
-        time.sleep(0.1)
+        # time.sleep(0.1)
         if(ret):
             # the main function
             line.image_red = []
@@ -489,10 +489,10 @@ if __name__ == '__main__':
             # cv2.imshow('HSV', HSV)
 
 
-            # k = cv2.waitKey(1) & 0xff
-            # if k == 27:
-            #     break
-            # time.sleep(0.05)
+            k = cv2.waitKey(1) & 0xff
+            if k == 27:
+                break
+            time.sleep(0.05)
         else:
             print('DEBUG: No frames input')
     cap.release()

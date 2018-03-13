@@ -98,6 +98,11 @@ class Server:
 
         self._server.sendMessage(sendMsg)
 
+    def sendTurnCommand(self, degrees):
+        sendMsg = "TRN:" + str(degrees)
+        self._server.sendMessage(sendMsg)
+
+
     def terminate(self):
         self._server.terminate()
 
