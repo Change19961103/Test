@@ -73,6 +73,17 @@ class line_detect():
         return image
 
 
+    def dest_detect(self, img):
+        decision = True
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1,100, param1=100, param2=30, minRadius=0, maxRadius=200)
+        try:
+            circles.any()
+        except:
+            decision = False
+        return decision
+
+
     def RemoveBackground_HSV_Red(self,image):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         channel1Min = 156;
@@ -346,6 +357,7 @@ if __name__ == '__main__':
             line.image_red = []
             line.image_blue = []
             line.image_black = []
+            dest = line.dest_detect(origin)
             # for i in range(line.slice):
             #     line.image_red.append(0)
             #     line.image_blue.append(0)
@@ -411,10 +423,15 @@ if __name__ == '__main__':
                     # line_following(some_color)
 
             # need color signal to specify turn left or right
-            if distance_Black:
-                [left_motor, right_motor] = line.line_following(distance_Black)
-                prev_l = left_motor
-                prev_r = right_motor
+            if not circle:
+                if distance_Black:
+                    [left_motor, right_motor] = line.line_following(distance_Black)
+                    prev_l = left_motor
+                    prev_r = right_motor
+                else:
+                    [left_motor, right_motor] = [-prev_l, -prev_r]
+            else:
+                [left_motor, right_motor] = [0, 0]
             # if distance_Blue:
             #     [left_motor, right_motor] = line.line_following(distance_Blue)
             #     prev_l = left_motor
@@ -423,8 +440,6 @@ if __name__ == '__main__':
             #     [left_motor, right_motor] = line.line_following(distance_Black)
             #     prev_l = left_motor
             #     prev_r = right_motor
-            else:
-                [left_motor, right_motor] = [-prev_l, -prev_r]
             print("left motor speed is {}".format(left_motor))
             print("right motor speed is {}".format(right_motor))
 
